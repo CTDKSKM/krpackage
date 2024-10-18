@@ -3,7 +3,7 @@
 import { Product } from '@/types';
 
 export const getProducts = async (): Promise<Product[]> => {
-    const response = await fetch('/api/products');
+    const response = await fetch(`${process.env.VERCEL_URL}/api/products`);
     if (!response.ok) {
       throw new Error('Failed to fetch products');
     }
@@ -11,7 +11,7 @@ export const getProducts = async (): Promise<Product[]> => {
   };
   
   export const saveProducts = async (products: Product[]): Promise<void> => {
-    const response = await fetch('/api/products', {
+    const response = await fetch(`${process.env.VERCEL_URL}/api/products`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
