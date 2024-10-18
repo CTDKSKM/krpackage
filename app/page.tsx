@@ -1,10 +1,12 @@
+'use client';
+
 import HomePage from '@/components/HomePage';
-import { getProducts } from '@/utils/product';
+// import { getProducts } from '@/utils/product';
 
 const Page = async () => {
-  const initialProducts = await getProducts();
+  // const initialProducts = await getProducts();
   
-  return <HomePage initialProducts={initialProducts} />;
+  return <HomePage />;
 }
 
 export default Page;
