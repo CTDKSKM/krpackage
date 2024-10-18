@@ -3,25 +3,57 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F9FAFB;
+  --foreground: #1F2937;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1F2937;
+    --foreground: #F9FAFB;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.neumorphic {
+  box-shadow: 5px 5px 10px #d1d5db, -5px -5px 10px #ffffff;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 1rem;
+}
+
+.neumorphic:hover {
+  box-shadow: 2px 2px 5px #d1d5db, -2px -2px 5px #ffffff;
+  transform: translateY(-2px);
+  border-radius: 0;
+}
+
+.neumorphic-inset {
+  box-shadow: inset 3px 3px 6px #d1d5db, inset -3px -3px 6px #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.neumorphic-inset:hover {
+  box-shadow: inset 1px 1px 3px #d1d5db, inset -1px -1px 3px #ffffff;
+}
+
+.neumorphic-button {
+  box-shadow: 3px 3px 6px #d1d5db, -3px -3px 6px #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 0.5rem;
+}
+
+.neumorphic-button:hover {
+  box-shadow: 1px 1px 3px #d1d5db, -1px -1px 3px #ffffff;
+  transform: translateY(-1px);
 }

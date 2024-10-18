@@ -1,19 +1,24 @@
-'use client'
+import { Noto_Sans_KR } from 'next/font/google'
+import '@/app/globals.css'
 
-import { ChakraProvider } from '@chakra-ui/react'
+const notoSansKR = Noto_Sans_KR({
+  weight: ['100', '300', '400', '500', '700', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: {
   children: React.ReactNode
-}) {
+}) => {
   return (
-    <html lang="en">
+    <html lang="en" className={notoSansKR.className}>
       <body>
-        <ChakraProvider>
           {children}
-        </ChakraProvider>
       </body>
     </html>
   )
 }
+
+export default RootLayout;
