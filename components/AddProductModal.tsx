@@ -1,21 +1,31 @@
 import { useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, VStack, Select } from '@chakra-ui/react';
-import { products } from '../data/products';
+import { getProducts, saveProducts } from '../data/products';
+import { Product } from '../types';
 
 interface AddProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   modelName: string;
+  onProductAdded: () => void;
 }
 
-const AddProductModal: React.FC<AddProductModalProps> = ({ isOpen, onClose, modelName }) => {
+const AddProductModal: React.FC<AddProductModalProps> = ({ isOpen, onClose, modelName, onProductAdded }) => {
   const [boxType, setBoxType] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (password === '1234') { // 실제 환경에서는 더 안전한 인증 방식을 사용해야 합니다
-      products.push({ modelName, boxType });
-      onClose();
+      try {
+        const currentProducts = await getProducts();
+        const updatedProducts = [...currentProducts, { modelName, boxType }];
+        await saveProducts(updatedProducts);
+        onProductAdded();
+        onClose();
+      } catch (error) {
+        console.error('Failed to add product:', error);
+        alert('제품 추가에 실패했습니다.');
+      }
     } else {
       alert('비밀번호가 올바르지 않습니다.');
     }

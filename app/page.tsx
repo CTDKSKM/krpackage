@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Container, Heading, Input, Button, VStack, Text, useDisclosure } from '@chakra-ui/react';
-import { SearchResult } from '../types';
-import { products } from '../data/products';
+import { SearchResult, Product } from '../types';
+import { getProducts } from '../data/products';
 import AddProductModal from '../components/AddProductModal';
 
 export default function Home() {
@@ -11,6 +11,20 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<SearchResult>({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [notFoundModel, setNotFoundModel] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const fetchedProducts = await getProducts();
+      setProducts(fetchedProducts);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  };
 
   const handleSearch = () => {
     const foundProduct = products.find(p => p.modelName === searchTerm);
@@ -24,6 +38,10 @@ export default function Home() {
       onOpen();
     }
     setSearchTerm('');
+  };
+
+  const handleProductAdded = () => {
+    fetchProducts();
   };
 
   return (
@@ -44,7 +62,7 @@ export default function Home() {
           ))}
         </Box>
       </VStack>
-      <AddProductModal isOpen={isOpen} onClose={onClose} modelName={notFoundModel} />
+      <AddProductModal isOpen={isOpen} onClose={onClose} modelName={notFoundModel} onProductAdded={handleProductAdded} />
     </Container>
   );
 }

@@ -15,11 +15,13 @@ export async function GET() {
 
     if ('content' in data) {
       const content = Buffer.from(data.content, 'base64').toString();
+      console.log("content", content);
       return NextResponse.json(JSON.parse(content));
     } else {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
   } catch (error) {
+    console.error('Error fetching data:', error);
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
   }
 }
@@ -29,7 +31,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const newData = await request.json();
-
     const { data: existingFile } = await octokit.repos.getContent({
       owner,
       repo,
@@ -54,4 +55,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to update data' }, { status: 500 });
   }
 }
-
