@@ -1,5 +1,3 @@
-'use client';
-
 import { Noto_Sans_KR } from 'next/font/google'
 import '@/app/globals.css'
 
