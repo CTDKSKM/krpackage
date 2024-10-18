@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
   } catch (error) {
+    console.error('Error updating data:', error);
     return NextResponse.json({ error: 'Failed to update data' }, { status: 500 });
   }
 }

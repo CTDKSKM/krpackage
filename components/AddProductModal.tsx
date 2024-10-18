@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, VStack, Select } from '@chakra-ui/react';
 import { getProducts, saveProducts } from '../data/products';
-import { Product } from '../types';
 
 interface AddProductModalProps {
   isOpen: boolean;
