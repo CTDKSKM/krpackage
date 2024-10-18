@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SearchResult, Product } from '../types';
 import { getProducts } from '@/utils/product';
 import AddProductModal from '@/components/AddProductModal';
@@ -14,9 +14,11 @@ const SearchForm = dynamic(() => import('@/components/SearchForm'), {
   ssr: false,
 });
 
-function HomePage() {
+interface HomePageProps {
+  initialProducts: Product[];
+}
 
-
+function HomePage({ initialProducts }: HomePageProps) {
     const [isOpen, setIsOpen] = useState(false);
     const onOpen = () => setIsOpen(true);
     const onClose = () => setIsOpen(false);
@@ -24,7 +26,7 @@ function HomePage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<SearchResult>({});
     const [notFoundModel, setNotFoundModel] = useState('');
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<Product[]>(initialProducts);
     const [searchHistory, setSearchHistory] = useState<Array<{modelName: string, boxType: string}>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showToast, setShowToast] = useState(false);
@@ -81,10 +83,6 @@ function HomePage() {
             return newHistory;
         });
     };
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
 
     return (
         <div className="container mx-auto p-4">
